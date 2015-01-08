@@ -19,11 +19,18 @@
         images = this,
         loaded;
 
+    function hasClass(element, className) {
+      return element.className && new RegExp("(^|\\s)" + className + "(\\s|$)").test(element.className);
+    }
+
     this.one("unveil", function() {
       var source = this.getAttribute(attrib);
       source = source || this.getAttribute("data-src");
       if (source) {
         this.setAttribute("src", source);
+        if (hasClass(this,"bgimage")) {
+          this.parentNode.style.backgroundImage="url('" + source + "')";
+        }
         if (typeof callback === "function") callback.call(this);
       }
     });
@@ -45,8 +52,7 @@
       images = images.not(loaded);
     }
 
-    $w.scroll(unveil);
-    $w.resize(unveil);
+    $w.on("scroll.unveil resize.unveil lookup.unveil", unveil);
 
     unveil();
 
