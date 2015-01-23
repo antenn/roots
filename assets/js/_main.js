@@ -23,6 +23,16 @@ var Roots = {
   common: {
     init: function() {
       // JavaScript to be fired on all pages
+
+      // Initialize jQuery Unveil plugin
+      $(document).ready(function() {
+        $("img").unveil(200, function() {
+          $(this).load(function() {
+            $(this).addClass("loaded");
+          });
+        });
+      });
+
     }
   },
   // Home page
